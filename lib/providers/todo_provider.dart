@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'todo.dart';
+import '../models/todo.dart';
 
 class TodoProvider extends ChangeNotifier {
   final List<Todo> _todos = [];
