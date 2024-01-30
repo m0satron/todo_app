@@ -10,31 +10,85 @@ class TodoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(todo.title),
-      subtitle: Text(todo.description),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: () {
-              Provider.of<TodoProvider>(context, listen: false).updateTodo(
-                todo.id,
+    final screenWidth = MediaQuery.of(context).size.width;
+    double cardWidth;
+
+    const double itemPadding = 8.0;
+    const double itemMargin = 8.0;
+    const double spacing = 8.0;
+
+    int itemsPerRow = screenWidth < 600 ? 2 : 4;
+    cardWidth = (screenWidth -
+            (spacing * (itemsPerRow - 1)) -
+            (itemMargin * 2 * itemsPerRow)) /
+        itemsPerRow;
+
+    return Container(
+      width: cardWidth,
+      height: cardWidth,
+      margin: const EdgeInsets.all(itemMargin),
+      padding: const EdgeInsets.all(itemPadding),
+      child: Card(
+        elevation: 1,
+        color: todo.isDone
+            ? Colors.lightGreen
+            : todo.isDeleted
+                ? Colors.grey
+                : Colors.white,
+        margin: const EdgeInsets.all(8),
+        child: Padding(
+          padding: const EdgeInsets.all(8), // Internal padding within the card
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
                 todo.title,
-                todo.description,
-                !todo.isDone,
-              );
-            },
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4),
+              Expanded(
+                child: Text(todo.description,
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 5),
+              ),
+              const Spacer(),
+              if (!todo.isDeleted)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (!todo.isDone)
+                      IconButton(
+                        icon: const Icon(Icons.check, color: Colors.green),
+                        onPressed: () {
+                          Provider.of<TodoProvider>(context, listen: false)
+                              .updateTodo(
+                            todo.id,
+                            todo.title,
+                            todo.description,
+                            !todo.isDone,
+                          );
+                        },
+                      ),
+                    IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () {
+                        Provider.of<TodoProvider>(context, listen: false)
+                            .deleteTodo(todo.id);
+                      },
+                    ),
+                  ],
+                ),
+            ],
           ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: () {
-              Provider.of<TodoProvider>(context, listen: false)
-                  .deleteTodo(todo.id);
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
