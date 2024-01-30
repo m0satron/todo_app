@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/todo_provider.dart';
 
-class AddTodoWidget extends StatelessWidget {
+class AddTodoWidget extends StatefulWidget {
+  const AddTodoWidget({super.key});
+
+  @override
+  State<AddTodoWidget> createState() => _AddTodoWidgetState();
+}
+
+class _AddTodoWidgetState extends State<AddTodoWidget> {
   // You can use TextEditingController to handle input text
   final TextEditingController titleController = TextEditingController();
+
   final TextEditingController descriptionController = TextEditingController();
 
-  AddTodoWidget({super.key});
+  bool get isInputValid => titleController.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +24,24 @@ class AddTodoWidget extends StatelessWidget {
         TextField(
           controller: titleController,
           decoration: const InputDecoration(labelText: 'Title'),
+          onChanged: (value) => setState(() {}),
         ),
         TextField(
           controller: descriptionController,
           decoration: const InputDecoration(labelText: 'Description'),
+          onChanged: (value) => setState(() {}),
         ),
         ElevatedButton(
-          onPressed: () {
-            if (titleController.text.isNotEmpty) {
-              Provider.of<TodoProvider>(context, listen: false).addTodo(
-                titleController.text,
-                descriptionController.text,
-              );
-              titleController.clear();
-              descriptionController.clear();
-            }
-          },
+          onPressed: isInputValid
+              ? () {
+                  Provider.of<TodoProvider>(context, listen: false).addTodo(
+                    titleController.text,
+                    descriptionController.text,
+                  );
+                  titleController.clear();
+                  descriptionController.clear();
+                }
+              : null,
           child: const Text('Add Todo'),
         ),
       ],
