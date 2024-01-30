@@ -4,7 +4,8 @@ import '../models/todo.dart';
 class TodoProvider extends ChangeNotifier {
   final List<Todo> _todos = [];
 
-  List<Todo> get todos => _todos.where((todo) => !todo.isDeleted).toList();
+  List<Todo> get todos =>
+      _todos.where((todo) => !todo.isDone && !todo.isDeleted).toList();
 
   List<Todo> get doneTodos =>
       _todos.where((todo) => todo.isDone && !todo.isDeleted).toList();
