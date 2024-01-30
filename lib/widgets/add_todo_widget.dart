@@ -15,6 +15,8 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
 
   final TextEditingController descriptionController = TextEditingController();
 
+  static const maxLength = 120;
+
   bool get isInputValid => titleController.text.isNotEmpty;
 
   @override
@@ -28,7 +30,13 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
         ),
         TextField(
           controller: descriptionController,
-          decoration: const InputDecoration(labelText: 'Description'),
+          decoration: InputDecoration(
+            labelText: 'Description',
+            counterText:
+                '${maxLength - descriptionController.text.length} characters remaining',
+          ),
+          maxLength: maxLength,
+          maxLines: null,
           onChanged: (value) => setState(() {}),
         ),
         ElevatedButton(
