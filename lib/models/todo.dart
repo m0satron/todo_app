@@ -1,7 +1,7 @@
 class Todo {
   final String id;
-  late final String title;
-  late final String description;
+  String title;
+  String description;
   bool isDone;
   bool isDeleted;
 
