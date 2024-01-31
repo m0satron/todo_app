@@ -16,19 +16,20 @@ class CurrentTodosScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Current Todos'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const AddTodoWidget(),
-            Wrap(
-              alignment: WrapAlignment.start,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const AddTodoWidget(),
+          Expanded(
+              child: SingleChildScrollView(
+            child: Wrap(
               spacing: 8.0,
               runSpacing: 8.0,
               children:
                   currentTodos.map((todo) => TodoItem(todo: todo)).toList(),
             ),
-          ],
-        ),
+          ))
+        ],
       ),
     );
   }

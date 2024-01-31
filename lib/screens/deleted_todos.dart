@@ -12,15 +12,16 @@ class DeletedTodosScreen extends StatelessWidget {
     final deletedTodos = todoProvider.deletedTodos;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Deleted Todos'),
-      ),
-      body: Wrap(
-        alignment: WrapAlignment.start,
-        spacing: 8.0,
-        runSpacing: 8.0,
-        children: deletedTodos.map((todo) => TodoItem(todo: todo)).toList(),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Deleted Todos'),
+        ),
+        body: SingleChildScrollView(
+          child: Wrap(
+            alignment: WrapAlignment.start,
+            spacing: 8.0,
+            runSpacing: 8.0,
+            children: deletedTodos.map((todo) => TodoItem(todo: todo)).toList(),
+          ),
+        ));
   }
 }
