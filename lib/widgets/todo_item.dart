@@ -28,6 +28,12 @@ class TodoItem extends StatelessWidget {
             (itemMargin * 2 * itemsPerRow)) /
         itemsPerRow;
 
+    Color color = todo.isDone
+        ? Colors.lightGreen
+        : todo.isDeleted
+            ? Colors.grey
+            : Colors.white;
+
     return Container(
       width: cardWidth,
       height: cardWidth,
@@ -35,14 +41,10 @@ class TodoItem extends StatelessWidget {
       padding: const EdgeInsets.all(itemPadding),
       child: Card(
         elevation: 1,
-        color: todo.isDone
-            ? Colors.lightGreen
-            : todo.isDeleted
-                ? Colors.grey
-                : Colors.white,
+        color: color,
         margin: const EdgeInsets.all(8),
         child: Padding(
-          padding: const EdgeInsets.all(8), // Internal padding within the card
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
