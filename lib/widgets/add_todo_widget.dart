@@ -10,7 +10,6 @@ class AddTodoWidget extends StatefulWidget {
 }
 
 class _AddTodoWidgetState extends State<AddTodoWidget> {
-  // You can use TextEditingController to handle input text
   final TextEditingController titleController = TextEditingController();
 
   final TextEditingController descriptionController = TextEditingController();
@@ -23,21 +22,29 @@ class _AddTodoWidgetState extends State<AddTodoWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextField(
-          controller: titleController,
-          decoration: const InputDecoration(labelText: 'Title'),
-          onChanged: (value) => setState(() {}),
-        ),
-        TextField(
-          controller: descriptionController,
-          decoration: InputDecoration(
-            labelText: 'Description',
-            counterText:
-                '${maxLength - descriptionController.text.length} characters remaining',
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: TextField(
+            controller: titleController,
+            decoration: const InputDecoration(
+                border: OutlineInputBorder(), labelText: 'Title'),
+            onChanged: (value) => setState(() {}),
           ),
-          maxLength: maxLength,
-          maxLines: null,
-          onChanged: (value) => setState(() {}),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: TextField(
+            controller: descriptionController,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              labelText: 'Description',
+              counterText:
+                  '${maxLength - descriptionController.text.length} characters remaining',
+            ),
+            maxLength: maxLength,
+            maxLines: null,
+            onChanged: (value) => setState(() {}),
+          ),
         ),
         ElevatedButton(
           onPressed: isInputValid
