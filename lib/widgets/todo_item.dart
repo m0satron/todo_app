@@ -17,7 +17,12 @@ class TodoItem extends StatelessWidget {
     const double itemMargin = 8.0;
     const double spacing = 8.0;
 
-    int itemsPerRow = screenWidth < 600 ? 2 : 4;
+    int itemsPerRow = screenWidth < 600
+        ? 1
+        : screenWidth < 800
+            ? 2
+            : 4;
+
     cardWidth = (screenWidth -
             (spacing * (itemsPerRow - 1)) -
             (itemMargin * 2 * itemsPerRow)) /
